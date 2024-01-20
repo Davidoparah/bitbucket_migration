@@ -1,11 +1,9 @@
-pipelines:
-  default:
-    - step:
-        name: Sync GitHub Mirror
-        image: alpine/git:latest # This image enables syncing
-        clone:
-          enabled: false
-        script:
-          - git clone --mirror https://x-token-auth:"$BITBUCKET_ACCESS_TOKEN"@bitbucket.org/championdavo/bitbucket_migration.git ## @bitbucket.org follow by your Bitbucket repository path
-          - cd bitbucket_migration.git ## cd followed by your Github repository Name
-          - git push --mirror https://x-token-auth:"$GITHUB_ACCESS_TOKEN"@github.com/Davidoparah/bitbucket_migration.git ## @github.com followed by your Github repository path
+step:
+  name: Sync GitHub Mirror
+  image: alpine/git:2.32.0
+  clone:
+    enabled: false
+  script:
+    - git clone --mirror https://x-token-auth:"$BITBUCKET_ACCESS_TOKEN"@bitbucket.org/championdavo/bitbucket_migration.git
+    - cd bitbucket_migration.git || exit
+    - git push --mirror https://x-token-auth:"$GITHUB_ACCESS_TOKEN"@github.com/Davidoparah/bitbucket_migration.git
